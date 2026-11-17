@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banca Retrô · Categoria</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;600;700;800&display=swap');
+
+    :root {
+      --bg-cream: #FFF4DC;
+      --bg-yellow: #FFD23F;
+      --red: #D7262E;
+      --text-black: #1E1E1E;
+      --tag-blue: #1F5FBF;
+      --white: #FFFFFF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-black);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Cabeçalho fixo */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--bg-cream);
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+
+    .header-spacer {
+      min-width: 1px;
+    }
+
+    .site-logo {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(2rem, 6vw, 2.75rem);
+      color: var(--red);
+      letter-spacing: 2px;
+      text-align: center;
+      text-decoration: none;
+      line-height: 1;
+      paint-order: stroke fill;
+      -webkit-text-stroke: 4px var(--text-black);
+      text-shadow: 3px 3px 0 var(--text-black);
+      user-select: none;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-suporte {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: var(--white);
+      color: var(--text-black);
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 3px solid var(--text-black);
+      border-radius: 10px;
+      box-shadow: 3px 3px 0 var(--text-black);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .btn-suporte:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--text-black);
+    }
+
+    /* Faixa de topo da categoria */
+    .category-banner {
+      background-color: var(--bg-yellow);
+      padding: 22px 16px 26px 16px;
+    }
+
+    .category-banner-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .btn-voltar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: var(--white);
+      color: var(--text-black);
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 3px solid var(--text-black);
+      border-radius: 10px;
+      box-shadow: 4px 4px 0 var(--text-black);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .btn-voltar:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 5px 5px 0 var(--text-black);
+    }
+
+    .btn-voltar:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--text-black);
+    }
+
+    .category-title {
+      font-family: 'Bangers', cursive;
+      color: var(--red);
+      font-size: clamp(2.1rem, 7vw, 3.1rem);
+      letter-spacing: 1.5px;
+      line-height: 1.08;
+    }
+
+    .category-subtitle {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-black);
+      font-weight: 600;
+      font-size: 0.98rem;
+      max-width: 680px;
+    }
+
+    /* Conteúdo principal e grade de capas (2 colunas no celular, 5 no computador) */
+    .category-main {
+      flex: 1;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 28px 16px 40px 16px;
+    }
+
+    .covers-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .cover-card {
+      background-color: var(--white);
+      border: 3px solid var(--text-black);
+      border-radius: 10px;
+      box-shadow: 4px 4px 0 var(--text-black);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      height: 100%;
+      text-decoration: none;
+      color: var(--text-black);
+    }
+
+    .cover-card.is-serie {
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .cover-card.is-serie:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--text-black);
+    }
+
+    .cover-img-wrap {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background-color: var(--bg-cream);
+      overflow: hidden;
+    }
+
+    .cover-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cover-body {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 10px;
+    }
+
+    .cover-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--text-black);
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .btn-ler-agora {
+      margin-top: auto;
+      display: block;
+      width: 100%;
+      text-align: center;
+      background-color: var(--red);
+      color: var(--white);
+      font-family: 'Bangers', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 1.2px;
+      text-decoration: none;
+      padding: 9px 10px;
+      border: 3px solid var(--text-black);
+      border-radius: 8px;
+      box-shadow: 3px 3px 0 var(--text-black);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .btn-ler-agora:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 var(--text-black);
+    }
+
+    .btn-ler-agora:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--text-black);
+    }
+
+    /* Blocos de séries (ex.: MARVEL, DC, HQs VARIADAS) */
+    .bloco-series {
+      margin-bottom: 40px;
+    }
+
+    .bloco-series:last-child {
+      margin-bottom: 0;
+    }
+
+    .bloco-titulo {
+      display: inline-block;
+      background-color: var(--tag-blue);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+    }
+
+    .bloco-series .carregar-mais-wrap {
+      display: none;
+    }
+
+    /* Botão vermelho CARREGAR MAIS */
+    .carregar-mais-wrap {
+      margin-top: 28px;
+      display: none;
+      justify-content: center;
+    }
+
+    .btn-carregar-mais {
+      display: inline-block;
+      width: 100%;
+      max-width: 340px;
+      text-align: center;
+      background-color: var(--red);
+      color: var(--white);
+      font-family: 'Bangers', cursive;
+      font-size: clamp(1.25rem, 4vw, 1.5rem);
+      letter-spacing: 1.5px;
+      padding: 12px 20px;
+      border: 3px solid var(--text-black);
+      border-radius: 10px;
+      box-shadow: 4px 4px 0 var(--text-black);
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .btn-carregar-mais:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 5px 5px 0 var(--text-black);
+    }
+
+    .btn-carregar-mais:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--text-black);
+    }
+
+    /* Botão azul no final da grade */
+    .ver-todos-wrap {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-ver-todos {
+      display: inline-block;
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+      background-color: var(--tag-blue);
+      color: var(--white);
+      font-family: 'Bangers', cursive;
+      font-size: clamp(1.25rem, 4vw, 1.55rem);
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      padding: 14px 20px;
+      border: 3px solid var(--text-black);
+      border-radius: 10px;
+      box-shadow: 4px 4px 0 var(--text-black);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .btn-ver-todos:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 5px 5px 0 var(--text-black);
+    }
+
+    .btn-ver-todos:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--text-black);
+    }
+
+    /* Rodapé */
+    .site-footer {
+      background-color: var(--bg-yellow);
+      padding: 28px 16px;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--text-black);
+    }
+
+    /* Computador: 5 colunas */
+    @media (min-width: 768px) {
+      .site-header {
+        padding: 16px 32px;
+      }
+
+      .category-main {
+        padding: 36px 24px 48px 24px;
+      }
+
+      .covers-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+      }
+    }
+
+    /* Celular (até 600px): espaçamento de 18px nas laterais, nada encosta na borda */
+    @media (max-width: 600px) {
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      .site-header {
+        padding: 14px 18px;
+        column-gap: 10px;
+      }
+
+      .site-logo {
+        font-size: 1.7rem;
+        -webkit-text-stroke: 3px var(--text-black);
+      }
+
+      .btn-suporte {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+
+      .category-banner {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .category-main {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      /* Grade de capas: 2 colunas, 14px entre colunas e 18px entre linhas */
+      .covers-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 14px;
+        row-gap: 18px;
+        width: 100%;
+      }
+
+      .cover-card {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .cover-img-wrap,
+      .cover-img {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .btn-carregar-mais,
+      .btn-ver-todos {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho fixo -->
+  <header class="site-header">
+    <div class="header-spacer"></div>
+    <a id="logo-link" class="site-logo">BANCA RETRÔ</a>
+    <div class="header-actions">
+      <a id="suporte-btn" class="btn-suporte" target="_blank" rel="noopener noreferrer">Suporte</a>
+    </div>
+  </header>
+
+  <!-- Topo da categoria -->
+  <section class="category-banner">
+    <div class="category-banner-inner">
+      <a id="voltar-btn" class="btn-voltar">← Voltar</a>
+      <h1 id="cat-title" class="category-title">CARREGANDO...</h1>
+      <p id="cat-desc" class="category-subtitle"></p>
+    </div>
+  </section>
+
+  <!-- Grade de séries ou capas -->
+  <main class="category-main">
+    <div id="covers-grid" class="covers-grid"></div>
+    <div id="carregar-mais-wrap" class="carregar-mais-wrap">
+      <button id="carregar-mais-btn" type="button" class="btn-carregar-mais">CARREGAR MAIS</button>
+    </div>
+    <div class="ver-todos-wrap">
+      <a id="ver-todos-btn" class="btn-ver-todos" target="_blank" rel="noopener noreferrer">
+        VER TODOS OS TÍTULOS DESTA CATEGORIA
+      </a>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="site-footer">
+    Banca Retrô · Os gibis da sua infância, guardados com carinho.
+  </footer>
+
+  <script>
+    const PAGE_SIZE = 20;
+
+    function createTitleCardElement(item) {
+      const cardEl = document.createElement('article');
+      cardEl.className = 'cover-card';
+
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'cover-img-wrap';
+
+      const img = document.createElement('img');
+      img.className = 'cover-img';
+      img.src = item.capa;
+      img.alt = item.nome;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      imgWrap.appendChild(img);
+
+      const body = document.createElement('div');
+      body.className = 'cover-body';
+
+      const title = document.createElement('strong');
+      title.className = 'cover-title';
+      title.textContent = item.nome;
+
+      const btn = document.createElement('a');
+      btn.className = 'btn-ler-agora';
+      btn.href = item.linkLeitura;
+      btn.target = '_blank';
+      btn.rel = 'noopener noreferrer';
+      btn.textContent = 'LER AGORA';
+
+      body.appendChild(title);
+      body.appendChild(btn);
+
+      cardEl.appendChild(imgWrap);
+      cardEl.appendChild(body);
+      return cardEl;
+    }
+
+    function createSerieCardElement(cardSlug, serie) {
+      const serieHref = 'categoria.html?card=' + encodeURIComponent(cardSlug) + '&serie=' + encodeURIComponent(serie.slug);
+      const cardEl = document.createElement('a');
+      cardEl.className = 'cover-card is-serie';
+      cardEl.href = serieHref;
+
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'cover-img-wrap';
+
+      const img = document.createElement('img');
+      img.className = 'cover-img';
+      img.src = serie.capa;
+      img.alt = serie.nome;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      imgWrap.appendChild(img);
+
+      const body = document.createElement('div');
+      body.className = 'cover-body';
+
+      const title = document.createElement('strong');
+      title.className = 'cover-title';
+      title.textContent = serie.nome;
+
+      const btn = document.createElement('span');
+      btn.className = 'btn-ler-agora';
+      btn.textContent = 'VER SÉRIE';
+
+      body.appendChild(title);
+      body.appendChild(btn);
+
+      cardEl.appendChild(imgWrap);
+      cardEl.appendChild(body);
+      return cardEl;
+    }
+
+    function renderPaginatedList(items, createItemFn) {
+      const grid = document.getElementById('covers-grid');
+      const loadMoreWrap = document.getElementById('carregar-mais-wrap');
+      const loadMoreBtn = document.getElementById('carregar-mais-btn');
+      grid.innerHTML = '';
+
+      let renderedCount = 0;
+
+      function appendNextBatch() {
+        const nextSlice = items.slice(renderedCount, renderedCount + PAGE_SIZE);
+        for (const it of nextSlice) {
+          grid.appendChild(createItemFn(it));
+        }
+        renderedCount += nextSlice.length;
+        if (renderedCount < items.length) {
+          loadMoreWrap.style.display = 'flex';
+        } else {
+          loadMoreWrap.style.display = 'none';
+        }
+      }
+
+      loadMoreBtn.onclick = appendNextBatch;
+      appendNextBatch();
+    }
+
+    // Renderiza as séries agrupadas em blocos, cada bloco com sua grade e seu CARREGAR MAIS (20 em 20)
+    function renderBlocos(card, series) {
+      const grid = document.getElementById('covers-grid');
+      const globalLoadMore = document.getElementById('carregar-mais-wrap');
+      globalLoadMore.style.display = 'none';
+
+      // A grade principal vira um contêiner simples de blocos
+      const container = document.createElement('div');
+      grid.replaceWith(container);
+      container.id = 'covers-grid';
+
+      for (const nomeBloco of card.blocos) {
+        const doBloco = series.filter(s => s.bloco === nomeBloco);
+        if (doBloco.length === 0) continue;
+
+        const section = document.createElement('section');
+        section.className = 'bloco-series';
+
+        const titulo = document.createElement('h2');
+        titulo.className = 'bloco-titulo';
+        titulo.textContent = nomeBloco;
+
+        const blocoGrid = document.createElement('div');
+        blocoGrid.className = 'covers-grid';
+
+        const loadWrap = document.createElement('div');
+        loadWrap.className = 'carregar-mais-wrap';
+        const loadBtn = document.createElement('button');
+        loadBtn.type = 'button';
+        loadBtn.className = 'btn-carregar-mais';
+        loadBtn.textContent = 'CARREGAR MAIS';
+        loadWrap.appendChild(loadBtn);
+
+        section.appendChild(titulo);
+        section.appendChild(blocoGrid);
+        section.appendChild(loadWrap);
+        container.appendChild(section);
+
+        let rendered = 0;
+        const appendNext = () => {
+          const slice = doBloco.slice(rendered, rendered + PAGE_SIZE);
+          for (const s of slice) blocoGrid.appendChild(createSerieCardElement(card.slug, s));
+          rendered += slice.length;
+          loadWrap.style.display = rendered < doBloco.length ? 'flex' : 'none';
+        };
+        loadBtn.onclick = appendNext;
+        appendNext();
+      }
+    }
+
+    async function initCategoria() {
+      const response = await fetch('links.json');
+      const data = await response.json();
+
+      const homePath = 'index.html';
+      document.getElementById('logo-link').href = homePath;
+
+      const suporteBtn = document.getElementById('suporte-btn');
+      if (data.suporteUrl) {
+        suporteBtn.href = data.suporteUrl;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const cardParam = (params.get('card') || '').toLowerCase();
+      const serieParam = (params.get('serie') || '').toLowerCase();
+
+      let selectedCard = null;
+      for (const sec of (data.secoes || [])) {
+        for (const card of (sec.cards || [])) {
+          const slug = (card.slug || '').toLowerCase();
+          if (slug === cardParam || slug.includes(cardParam)) {
+            selectedCard = card;
+            break;
+          }
+        }
+        if (selectedCard) break;
+      }
+
+      if (!selectedCard && data.secoes && data.secoes[0] && data.secoes[0].cards) {
+        selectedCard = data.secoes[0].cards[0];
+      }
+
+      if (!selectedCard) return;
+
+      const voltarBtn = document.getElementById('voltar-btn');
+      const verTodosBtn = document.getElementById('ver-todos-btn');
+      const cardFolderUrl = selectedCard.linkPastaCompleta || selectedCard.linkDrivePasta || selectedCard.linkCorrigido || selectedCard.linkAcessar;
+
+      // Se a categoria possui séries:
+      if (selectedCard.temSeries && Array.isArray(selectedCard.series) && selectedCard.series.length > 0) {
+        if (serieParam) {
+          const selectedSerie = selectedCard.series.find(s => (s.slug || '').toLowerCase() === serieParam);
+          if (selectedSerie) {
+            voltarBtn.href = 'categoria.html?card=' + encodeURIComponent(selectedCard.slug);
+            document.title = selectedSerie.nome + ' · ' + selectedCard.nome + ' · Banca Retrô';
+            document.getElementById('cat-title').textContent = selectedSerie.nome.toUpperCase();
+            document.getElementById('cat-desc').textContent = 'Série de ' + selectedCard.nome + ' · Escolha uma edição abaixo e toque em LER AGORA.';
+            verTodosBtn.href = selectedSerie.linkPasta || cardFolderUrl;
+            renderPaginatedList(selectedSerie.titulos || [], createTitleCardElement);
+            return;
+          }
+        }
+
+        // Visão de séries do card
+        voltarBtn.href = homePath;
+        document.title = selectedCard.nome + ' · Banca Retrô';
+        document.getElementById('cat-title').textContent = selectedCard.nome.toUpperCase();
+        document.getElementById('cat-desc').textContent = 'Toque em uma série para abrir as edições com capa.';
+        verTodosBtn.href = cardFolderUrl;
+
+        // Esconder séries com menos de 3 títulos com capa
+        const countOf = (s) => (Array.isArray(s.titulos) ? s.titulos.length : 0);
+        const hasPrio = (s) => typeof s.prioridade === 'number';
+        const sortSeries = (a, b) => {
+          // Séries mais famosas (lista de prioridade) primeiro, na ordem da lista
+          if (hasPrio(a) && hasPrio(b)) return a.prioridade - b.prioridade;
+          if (hasPrio(a)) return -1;
+          if (hasPrio(b)) return 1;
+          // Depois, da que tem mais títulos para a que tem menos
+          if (countOf(b) !== countOf(a)) return countOf(b) - countOf(a);
+          return a.nome.localeCompare(b.nome);
+        };
+        const visibleSeries = (selectedCard.series || [])
+          .filter(s => countOf(s) >= 3)
+          .slice()
+          .sort(sortSeries);
+
+        // Categoria organizada em blocos (ex.: MARVEL, DC, HQs VARIADAS)
+        if (Array.isArray(selectedCard.blocos) && selectedCard.blocos.length > 0) {
+          renderBlocos(selectedCard, visibleSeries);
+          return;
+        }
+
+        renderPaginatedList(visibleSeries, (serie) => createSerieCardElement(selectedCard.slug, serie));
+        return;
+      }
+
+      // Categoria com títulos diretos
+      voltarBtn.href = homePath;
+      document.title = selectedCard.nome + ' · Banca Retrô';
+      document.getElementById('cat-title').textContent = selectedCard.nome.toUpperCase();
+      document.getElementById('cat-desc').textContent = selectedCard.descricao || '';
+      verTodosBtn.href = cardFolderUrl;
+      renderPaginatedList(selectedCard.titulos || [], createTitleCardElement);
+    }
+
+    initCategoria();
+  </script>
+</body>
+</html>
